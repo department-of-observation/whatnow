@@ -12,3 +12,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 }
+
+you dumb dumb
+fuck you
+shut up
+let me sleep
