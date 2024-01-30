@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "804357041745",
+    "project_id": "what-now-59a3b",
+    "storage_bucket": "what-now-59a3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:804357041745:android:57e65879fde77214efd270",
+        "android_client_info": {
+          "package_name": "com.sp.whatnow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "804357041745-tm3rfl254pbqf8fokrlsia3n2j1v2udu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sp.whatnow",
+            "certificate_hash": "f9b62406d178186cd8ecf3602b15479485c65098"
+          }
+        },
+        {
+          "client_id": "804357041745-pe0doac37nce0kh36kjl4p5dgq6l3ktk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV-kggqfFmjSf4npMghj3og-T-tUX5pgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "804357041745-pe0doac37nce0kh36kjl4p5dgq6l3ktk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
