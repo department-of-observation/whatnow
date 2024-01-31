@@ -62,6 +62,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tab_likes_dislikes"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
@@ -88,6 +89,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tab_hobbies"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
@@ -132,6 +134,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tab_favourite"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
@@ -158,6 +161,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tab_documents"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
@@ -202,6 +206,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tab_language"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
