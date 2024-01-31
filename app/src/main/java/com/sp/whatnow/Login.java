@@ -20,6 +20,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import androidx.appcompat.app.ActionBar;
 
 public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -29,6 +30,8 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
         setContentView(R.layout.activity_login);
 
 
