@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".Signup">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
                 android:layout_height="160dp" />
 
             <TextView
-                android:id="@+id/logintext1"
+                android:id="@+id/signuptext1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
@@ -32,7 +32,21 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/login_username"
+                android:id="@+id/signup_username"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
+                android:fontFamily="@font/poppins"
+                android:hint="  Enter Your Username"
+                android:inputType="text"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/signup_email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="30dp"
@@ -40,12 +54,12 @@
                 android:background="@drawable/edit_text_border"
                 android:ems="10"
                 android:fontFamily="@font/poppins"
-                android:hint="  Enter Your Username / Email"
+                android:hint="  Enter Your Email"
                 android:inputType="text"
                 android:textSize="14sp" />
 
             <EditText
-                android:id="@+id/login_password"
+                android:id="@+id/signup_password"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginLeft="30dp"
@@ -58,55 +72,30 @@
                 android:inputType="textPassword"
                 android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/login_forget"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:clickable="true"
+            <EditText
+                android:id="@+id/signup_password2"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/edit_text_border"
+                android:ems="10"
                 android:fontFamily="@font/poppins"
-                android:text="Forgot Password?"
-                android:textAlignment="center"
-                android:textColor="#2196F3" />
+                android:hint="  Confirm Your Password"
+                android:inputType="textPassword"
+                android:textSize="14sp" />
 
             <Button
-                android:id="@+id/login_button"
+                android:id="@+id/signup_button"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:text="Login"
-                app:rippleColor="@color/purple_500" 
-                android:fontFamily="@font/poppins" />
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/poppins"
+                android:text="Sign Up"
+                app:rippleColor="@color/purple_500" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/logintext2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/poppins"
-                    android:text="Don't have an account?"
-                    android:textAlignment="textEnd"
-                    android:textColor="#000000" />
-
-                <TextView
-                    android:id="@+id/login_Signup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:fontFamily="@font/poppins"
-                    android:text="Sign up"
-                    android:textColor="#2196F3" />
-            </LinearLayout>
         </LinearLayout>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
