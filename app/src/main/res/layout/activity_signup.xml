@@ -94,7 +94,6 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins"
                 android:text="Sign Up"
-                app:backgroundTint="#88BEE8"
                 app:rippleColor="@color/purple_500" />
 
         </LinearLayout>

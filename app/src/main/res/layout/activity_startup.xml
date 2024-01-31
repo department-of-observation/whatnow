@@ -94,7 +94,6 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/poppins"
                 android:text="Login Without Google"
-                app:backgroundTint="#88BEE8"
                 app:rippleColor="@color/purple_500" />
 
             <Button
@@ -105,7 +104,6 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/poppins"
                 android:text="Sign up Without Google"
-                app:backgroundTint="#88BEE8"
                 app:rippleColor="@color/purple_500" />
 
         </LinearLayout>

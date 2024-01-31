@@ -77,7 +77,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text="Login"
-                app:backgroundTint="#88BEE8"
                 app:rippleColor="@color/purple_500" 
                 android:fontFamily="@font/poppins" />
 

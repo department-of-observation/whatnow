@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <item
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/dashboard_svgrepo_com"
+            android:title="Dashboard" />
+    </group>
+    <group
+        android:id="@+id/menu_middle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <item
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/arrow_up_graph_svgrepo_com"
+            android:title="Long Term Plan " />
+    </group>
+    <group
+        android:id="@+id/menu_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        <item
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/document_text_svgrepo_com"
+            android:title="Documents" />
+        <item
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/setting_svgrepo_com"
+            android:title="Setttings" />
+    </group>
+</menu>
