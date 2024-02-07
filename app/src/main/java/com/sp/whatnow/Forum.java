@@ -47,4 +47,9 @@ public class Forum {
         this.forumdate = forumdate;
     }
 
+    @Override
+    public String toString() {
+        return (getTitle());
+    }
+
 }
