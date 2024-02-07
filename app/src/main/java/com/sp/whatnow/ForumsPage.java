@@ -6,6 +6,7 @@ import androidx.cursoradapter.widget.CursorAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -18,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
@@ -38,7 +41,7 @@ import java.util.Map;
 
 public class ForumsPage extends AppCompatActivity {
     private RecyclerView list;
-    private List<Retrieval> model = new ArrayList<>();
+    private List<Forum> model = new ArrayList<>();
     private ForumAdapter adapter = null;
     private RequestQueue queue;
     private ForumHelper helper;
@@ -62,6 +65,19 @@ public class ForumsPage extends AppCompatActivity {
     protected void onResume() {
         //getAllVolley();
         super.onResume();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.forum_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.refresh) {
+            getAllVolley(); //Update the RecyclerView
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
@@ -120,85 +136,43 @@ public class ForumsPage extends AppCompatActivity {
         // add JsonObjectRequest to the RequestQueue
         queue.add(jsonObjectRequest);
     }
+    static class ForumHolder extends RecyclerView.ViewHolder {
+        private TextView rowTitle;
+        private TextView rowUser;
+        private TextView rowContent;
+        private TextView rowDate;
 
-    static class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumHolder>{
-        private Context context;
-        private ForumHelper helper;
-        private Cursor cursor;
-        private LayoutInflater inflater;
-        private OnItemClickListener listener;
-
-        interface OnItemClickListener {
-            void onItemClick(int i, double longitude, double latitiude);
-        }
-        public void setOnItemClickListener(OnItemClickListener listener) {
-            this.listener = listener;
-        }
-
-        ForumAdapter(Context context, Cursor cursor, ForumHelper helper){
-            this.cursor = cursor;
-            this.helper = helper;
-            inflater=LayoutInflater.from(context);
-        }
-        public void swapCursor(Cursor newCursor) {
-            if (cursor != null) {
-                cursor.close();
-            }
-            cursor = newCursor;
-
-            if (newCursor != null) {
-                notifyDataSetChanged();
-            }
-        }
-        public ForumHolder onCreateViewHolder(ViewGroup parent,int viewType){
-            return new ForumHolder(this.inflater.inflate(R.layout.row, parent, false));
+        ForumHolder(View itemView) {
+            super(itemView);
+            rowTitle = itemView.findViewById(R.id.row_title);
+            rowUser = itemView.findViewById(R.id.row_user);
+            rowContent = itemView.findViewById(R.id.row_content);
+            rowDate = itemView.findViewById(R.id.row_date);
         }
 
-        public void onBindViewHolder(ForumAdapter.ForumHolder holder,final int position){
-            cursor.moveToPosition(position);
-            holder.populateFrom(cursor,helper);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) {
-                    int clickedPosition = holder.getAdapterPosition();
-                    if (ForumAdapter.this.listener != null && clickedPosition != -1) {
-                        ForumAdapter.this.cursor.moveToPosition(clickedPosition);
-                        int i = clickedPosition;
-
-                    }
-                }
-            });
-
-
+        void populateFrom(Forum r) {
+            rowTitle.setText(r.getTitle());
+            rowUser.setText(r.getUser());
+            rowContent.setText(r.getContent());
+            rowDate.setText(r.getDate());
         }
-        public int getItemCount(){return cursor.getCount();}
-
-        class ForumHolder extends RecyclerView.ViewHolder{
-            //initialises the views
-            private TextView rowTitle;
-            private TextView rowUser;
-            private TextView rowContent;
-            private TextView rowDate;
-
-            //retrieves the views to be changed
-            ForumHolder(View row){
-                super(row);
-                rowTitle = row.findViewById(R.id.row_title);
-                rowUser = row.findViewById(R.id.row_user);
-                rowContent = row.findViewById(R.id.row_content);
-                rowDate = row.findViewById(R.id.row_date);
-
-            }
-            //changes the views according to the database
-            public void populateFrom(Cursor c, ForumHelper helper){
-                rowTitle.setText(helper.getforumtitle(c));
-                rowDate.setText(helper.getforumdate(c));
-                rowUser.setText(helper.getforumuser(c));
-                rowContent.setText(helper.getforumcontent(c));
-
-            }
-
+    }
+    class ForumAdapter extends RecyclerView.Adapter<ForumHolder> {
+        @Override
+        public ForumHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
+            return new ForumHolder(view);
         }
 
+        @Override
+        public void onBindViewHolder(ForumHolder holder, int position) {
+            holder.populateFrom(model.get(position));
+        }
+
+        @Override
+        public int getItemCount() {
+            return model.size();
+        }
     }
 
 }
