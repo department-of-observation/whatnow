@@ -46,6 +46,9 @@ public class ForumsPage extends AppCompatActivity {
         setContentView(R.layout.activity_forums_page);
         list = findViewById(R.id.ForumList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getParent()); // dont know what this does
+        list.setLayoutManager(layoutManager);
+        adapter = new ForumAdapter();
+        list.setAdapter(adapter);
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
@@ -96,10 +99,6 @@ public class ForumsPage extends AppCompatActivity {
                                     JSONArray data = response.getJSONArray("data");//Get all the records as JSON array
                                     for (int i = 0; i <= count; i++) { // Loop through all records
                                         Forum r = new Forum();
-                                        // Store the lastest id in lastID
-                                        if (ForumVolleyHelper.lastID < data.getJSONObject(i).getInt("id")) {
-                                            ForumVolleyHelper.lastID = data.getJSONObject(i).getInt("id");
-                                        }
                                         // For each json record
                                         r.setId(data.getJSONObject(i).getString("id")); //read the id
                                         r.setTitle(data.getJSONObject(i).getString("forumtitle")); //extract the restaurantname
