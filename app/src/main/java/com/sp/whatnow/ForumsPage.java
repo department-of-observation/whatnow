@@ -120,28 +120,6 @@ public class ForumsPage extends AppCompatActivity {
         // add JsonObjectRequest to the RequestQueue
         queue.add(jsonObjectRequest);
     }
-    /*
-    static class ForumHolder{
-        private TextView rowTitle;
-        private TextView rowDate;
-        private TextView rowUser;
-        private TextView rowContent;
-
-        ForumHolder(View row){
-            rowTitle = row.findViewById(R.id.row_title);
-            rowDate = row.findViewById(R.id.row_date);
-            rowUser = row.findViewById(R.id.row_user);
-            rowContent = row.findViewById(R.id.row_content);
-        }
-        void populateFrom(Cursor c,ForumHelper helper){
-            rowTitle.setText(helper.getforumtitle(c));
-            rowDate.setText(helper.getforumdate(c));
-            rowUser.setText(helper.getforumuser(c));
-            rowContent.setText(helper.getforumcontent(c));
-        }
-    }
-
-     */
 
     static class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumHolder>{
         private Context context;
@@ -222,6 +200,30 @@ public class ForumsPage extends AppCompatActivity {
         }
 
     }
+
+}
+    /*
+    static class ForumHolder{
+        private TextView rowTitle;
+        private TextView rowDate;
+        private TextView rowUser;
+        private TextView rowContent;
+
+        ForumHolder(View row){
+            rowTitle = row.findViewById(R.id.row_title);
+            rowDate = row.findViewById(R.id.row_date);
+            rowUser = row.findViewById(R.id.row_user);
+            rowContent = row.findViewById(R.id.row_content);
+        }
+        void populateFrom(Cursor c,ForumHelper helper){
+            rowTitle.setText(helper.getforumtitle(c));
+            rowDate.setText(helper.getforumdate(c));
+            rowUser.setText(helper.getforumuser(c));
+            rowContent.setText(helper.getforumcontent(c));
+        }
+    }
+
+     */
     /*
     class RestaurantAdapter extends CursorAdapter {
         RestaurantAdapter(Context context, Cursor cursor, int flags) {
@@ -244,7 +246,3 @@ public class ForumsPage extends AppCompatActivity {
     }
 
      */
-
-
-
-}
