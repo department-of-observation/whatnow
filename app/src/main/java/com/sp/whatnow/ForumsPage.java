@@ -158,6 +158,16 @@ public class ForumsPage extends AppCompatActivity {
         }
     }
     class ForumAdapter extends RecyclerView.Adapter<ForumHolder> {
+
+        public void add(Forum forum) {
+            model.add(forum);
+            notifyDataSetChanged();
+        }
+
+        public void clear() {
+            model.clear();
+            notifyDataSetChanged();
+        }
         @Override
         public ForumHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row, parent, false);
