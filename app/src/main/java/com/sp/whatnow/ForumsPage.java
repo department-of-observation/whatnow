@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class ForumsPage extends AppCompatActivity {
     private RecyclerView list;
-    private Cursor model = null;
+    private List<Retrieval> model = new ArrayList<>();
     private ForumAdapter adapter = null;
     private RequestQueue queue;
     private ForumHelper helper;
