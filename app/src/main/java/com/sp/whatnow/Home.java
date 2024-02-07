@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -53,6 +53,7 @@ public class Home extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Intent intent;
                 // Handle item clicks here
                 switch (item.getItemId()) {
                     case R.id.nav_dashboard:
@@ -75,6 +76,10 @@ public class Home extends AppCompatActivity {
                                 .replace(R.id.homeFragmentContainer, settings)
                                 .commit();
                         drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                    case R.id.nav_forum:
+                        intent = new Intent(Home.this,ForumsPage.class);
+                        startActivity(intent);
                         return true;
                 }
                 return false;

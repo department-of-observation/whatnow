@@ -1,23 +1,16 @@
 package com.sp.whatnow;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cursoradapter.widget.CursorAdapter;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +37,7 @@ public class ForumsPage extends AppCompatActivity {
     private ForumAdapter adapter = null;
     private RequestQueue queue;
     private ForumHelper helper;
+    private Toolbar toolbar;
     private int volleyResponseStatus;
 
     @Override
@@ -53,6 +46,9 @@ public class ForumsPage extends AppCompatActivity {
         setContentView(R.layout.activity_forums_page);
         list = findViewById(R.id.ForumList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getParent()); // dont know what this does
+
+        toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -74,8 +70,12 @@ public class ForumsPage extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.refresh) {
+        Intent intent;
+        if (item.getItemId() == R.id.forum_refresh) {
             getAllVolley(); //Update the RecyclerView
+        } else if (item.getItemId() == R.id.forum_add) {
+            intent = new Intent(ForumsPage.this,DetailsForum.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

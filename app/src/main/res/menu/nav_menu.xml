@@ -30,6 +30,11 @@
             android:layout_height="wrap_content"
             android:icon="@drawable/arrow_up_graph_svgrepo_com"
             android:title="Exercise " />
+            <item
+                android:id="@+id/nav_forum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:title="Forum" />
 
         </menu>
     </item>
