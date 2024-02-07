@@ -19,8 +19,6 @@ public class Home extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private NavigationView navigationView;
-    private DocumentsFragment documentsFragment;
-    private SettingsFragment settingsFragment;
     private Toolbar toolbar;
 
     @Override
@@ -46,23 +44,44 @@ public class Home extends AppCompatActivity {
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
+        homeFragment home = new homeFragment();
+        DocumentsFragment documents = new DocumentsFragment();
+        SettingsFragment settings = new SettingsFragment();
+
 
         // Handle item clicks in the NavigationView
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // Handle item clicks here
-                int id = item.getItemId();
-                if (id == R.id.nav_documents) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.homeFragmentContainer, documentsFragment).commit();
-                } else if (id == R.id.nav_settings){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.homeFragmentContainer, settingsFragment).commit();
+                switch (item.getItemId()) {
+                    case R.id.nav_dashboard:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.homeFragmentContainer, home)
+                                .commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                    case R.id.nav_documents:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.homeFragmentContainer, documents)
+                                .commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                    case R.id.nav_settings:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.homeFragmentContainer, settings)
+                                .commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
                 }
+                return false;
 
 
-                // Close the drawer after handling the item click
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
+
+
             }
         });
 
