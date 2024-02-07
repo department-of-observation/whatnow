@@ -2,6 +2,21 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="DetailsForum">
+        <State />
+      </entry>
+      <entry key="ForumsPage">
+        <State />
+      </entry>
+      <entry key="Login">
+        <State />
+      </entry>
+      <entry key="Signup">
+        <State />
+      </entry>
+      <entry key="StartupActivity">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
