@@ -76,7 +76,7 @@ public class homeFragment extends Fragment {
         PieChart pieChart2 = view.findViewById(R.id.pieChart2);
 
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(totalNonUsageTime, "Sleep Time"));
+        entries.add(new PieEntry(totalNonUsageTime, "Offline Time"));
         entries.add(new PieEntry(totalUsageTime, "Screen Time"));
 
         List<Integer> colors = new ArrayList<>();
@@ -98,8 +98,18 @@ public class homeFragment extends Fragment {
         // Customize the appearance if needed
         pieChart.setHoleRadius(25f);
         pieChart.setTransparentCircleRadius(30f);
-        pieChart.setCenterText("Your time allocation");
-        pieChart.setCenterTextSize(15f);
+        if(totalNonUsageTime>totalUsageTime) {
+            pieChart.setCenterText("\\( ﾟヮﾟ)/");
+        }else{
+            pieChart.setCenterText("" +
+                    "⡏⠉⠉⠉⠉⠉⠉⠋⠉⠉⠉⠉⠉⠉⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠙⠉⠉⠉⠹\n" +
+                    "⡇⢸⣿⡟⠛⢿⣷⠀⢸⣿⡟⠛⢿⣷⡄⢸⣿⡇⠀⢸⣿⡇⢸⣿⡇⠀⢸⣿⡇⠀\n" +
+                    "⡇⢸⣿⣧⣤⣾⠿⠀⢸⣿⣇⣀⣸⡿⠃⢸⣿⡇⠀⢸⣿⡇⢸⣿⣇⣀⣸⣿⡇⠀\n" +
+                    "⡇⢸⣿⡏⠉⢹⣿⡆⢸⣿⡟⠛⢻⣷⡄⢸⣿⡇⠀⢸⣿⡇⢸⣿⡏⠉⢹⣿⡇⠀\n" +
+                    "⡇⢸⣿⣧⣤⣼⡿⠃⢸⣿⡇⠀⢸⣿⡇⠸⣿⣧⣤⣼⡿⠁⢸⣿⡇⠀⢸⣿⡇⠀\n" +
+                    "⣇⣀⣀⣀⣀⣀⣀⣄⣀⣀⣀⣀⣀⣀⣀⣠⣀⡈⠉⣁⣀⣄⣀⣀⣀⣠⣀⣀⣀⣰");
+        }
+        pieChart.setCenterTextSize(4f);
 
         // Refresh the chart
         pieChart.invalidate();
