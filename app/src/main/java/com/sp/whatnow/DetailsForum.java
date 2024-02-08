@@ -74,7 +74,7 @@ public class DetailsForum extends AppCompatActivity {
                 finish();
             }
             insertVolley(newuuid, titleStr, nameStr, contentStr, currentDate);
-
+            finish();
         }
         private String getCurrentDate() {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
