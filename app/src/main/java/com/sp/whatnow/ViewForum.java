@@ -109,6 +109,7 @@ public class ViewForum extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent;
         if (item.getItemId() == R.id.forum_refresh) {
+            Log.d("soh", dataforum_id);
             getAllVolley();
         } else if (item.getItemId() == R.id.forum_add) {
             intent = new Intent(ViewForum.this,AddComment.class);
@@ -144,7 +145,7 @@ public class ViewForum extends AppCompatActivity {
 
     private void getAllVolley() {
         queue = Volley.newRequestQueue(this);
-        String url = CommentVolleyHelper.url + "rows"; //Query all records
+        String url = CommentVolleyHelper.url + dataforum_id + "?";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -164,6 +165,7 @@ public class ViewForum extends AppCompatActivity {
                                         r.setContent(data.getJSONObject(i).getString("comment_content")); //extract the restauranttel
                                         Log.d("geh", r.getUser());
                                         Log.d("geh", r.getId());
+                                        Log.d("soh", dataforum_id);
                                         Log.d("geh", r.getCId());
                                         Log.d("geh", r.getContent());
 
