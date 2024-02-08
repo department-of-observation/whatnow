@@ -2,6 +2,7 @@ package com.sp.whatnow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +32,7 @@ public class AddComment extends AppCompatActivity {
     private EditText comment;
     private Button sendComment;
     private FirebaseAuth firebaseAuth;
+    private String  forum_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,12 @@ public class AddComment extends AppCompatActivity {
         sendComment = findViewById(R.id.sendComment);
         sendComment.setOnClickListener(onSend);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            forum_id = intent.getStringExtra("forum_id");
+
+        }
     }
 
     @Override
