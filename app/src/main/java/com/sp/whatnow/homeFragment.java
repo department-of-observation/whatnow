@@ -1,10 +1,15 @@
 package com.sp.whatnow;
 
+import android.app.usage.UsageStats;
+import android.app.usage.UsageStatsManager;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +26,8 @@ import java.util.List;
 
 
 public class homeFragment extends Fragment {
+    private Long totalUsageTime;
+    private Long totalNonUsageTime;
 
     public homeFragment() {
         // Required empty public constructor
@@ -29,11 +36,34 @@ public class homeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+        startActivity(intent);
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Context context = getContext();
+        if (context != null) {
+            UsageStatsManager usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
+
+            long currentTime = System.currentTimeMillis();
+            long startTime = currentTime - 24 * 60 * 60 * 1000; // 24 hours ago
+
+            List<UsageStats> usageStatsList = usageStatsManager.queryUsageStats(
+                    UsageStatsManager.INTERVAL_DAILY, startTime, currentTime);
+
+             totalUsageTime = 0L;
+
+            for (UsageStats usageStats : usageStatsList) {
+                totalUsageTime += usageStats.getTotalTimeInForeground();
+            }
+            totalUsageTime = totalUsageTime / (1000 * 60);
+            totalNonUsageTime = 1440-totalUsageTime;
+        }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
@@ -46,14 +76,13 @@ public class homeFragment extends Fragment {
         PieChart pieChart2 = view.findViewById(R.id.pieChart2);
 
         List<PieEntry> entries = new ArrayList<>();
-        entries.add(new PieEntry(20f, "Sleep Time"));
-        entries.add(new PieEntry(30f, "Screen Time"));
-        entries.add(new PieEntry(50f, "Other"));
+        entries.add(new PieEntry(totalNonUsageTime, "Offline Time"));
+        entries.add(new PieEntry(totalUsageTime, "Screen Time"));
 
         List<Integer> colors = new ArrayList<>();
         colors.add(Color.argb(128, 0, 0, 255));   // Softened Blue for Category 1
         colors.add(Color.argb(128, 0, 255, 0));   // Softened Green for Category 2
-        colors.add(Color.argb(128, 255, 0, 0));   // Softened Red for Category 3
+
 
         PieDataSet dataSet = new PieDataSet(entries, "My Pie Chart");
 
@@ -69,8 +98,19 @@ public class homeFragment extends Fragment {
         // Customize the appearance if needed
         pieChart.setHoleRadius(25f);
         pieChart.setTransparentCircleRadius(30f);
-        pieChart.setCenterText("Your time allocation");
-        pieChart.setCenterTextSize(15f);
+        if(totalNonUsageTime>totalUsageTime) {
+            pieChart.setCenterTextSize(15f);
+            pieChart.setCenterText("\\( ﾟヮﾟ)/");
+        }else{
+            pieChart.setCenterTextSize(4f);
+            pieChart.setCenterText("" +
+                    "⡏⠉⠉⠉⠉⠉⠉⠋⠉⠉⠉⠉⠉⠉⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠙⠉⠉⠉⠹\n" +
+                    "⡇⢸⣿⡟⠛⢿⣷⠀⢸⣿⡟⠛⢿⣷⡄⢸⣿⡇⠀⢸⣿⡇⢸⣿⡇⠀⢸⣿⡇⠀\n" +
+                    "⡇⢸⣿⣧⣤⣾⠿⠀⢸⣿⣇⣀⣸⡿⠃⢸⣿⡇⠀⢸⣿⡇⢸⣿⣇⣀⣸⣿⡇⠀\n" +
+                    "⡇⢸⣿⡏⠉⢹⣿⡆⢸⣿⡟⠛⢻⣷⡄⢸⣿⡇⠀⢸⣿⡇⢸⣿⡏⠉⢹⣿⡇⠀\n" +
+                    "⡇⢸⣿⣧⣤⣼⡿⠃⢸⣿⡇⠀⢸⣿⡇⠸⣿⣧⣤⣼⡿⠁⢸⣿⡇⠀⢸⣿⡇⠀\n" +
+                    "⣇⣀⣀⣀⣀⣀⣀⣄⣀⣀⣀⣀⣀⣀⣀⣠⣀⡈⠉⣁⣀⣄⣀⣀⣀⣠⣀⣀⣀⣰");
+        }
 
         // Refresh the chart
         pieChart.invalidate();

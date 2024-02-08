@@ -140,4 +140,5 @@ public class StartupActivity extends AppCompatActivity {
     private void updateUI(FirebaseUser user) {
 
     }
+
 }
