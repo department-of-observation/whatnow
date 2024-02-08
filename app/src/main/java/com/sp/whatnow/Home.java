@@ -47,6 +47,7 @@ public class Home extends AppCompatActivity {
         homeFragment home = new homeFragment();
         DocumentsFragment documents = new DocumentsFragment();
         SettingsFragment settings = new SettingsFragment();
+        ExerciseFragment exercise = new ExerciseFragment();
 
 
         // Handle item clicks in the NavigationView
@@ -66,6 +67,13 @@ public class Home extends AppCompatActivity {
                         getSupportFragmentManager()
                                 .beginTransaction()
                                 .replace(R.id.homeFragmentContainer, documents)
+                                .commit();
+                        drawerLayout.closeDrawer(GravityCompat.START);
+                        return true;
+                    case R.id.nav_exercise:
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.homeFragmentContainer, exercise)
                                 .commit();
                         drawerLayout.closeDrawer(GravityCompat.START);
                         return true;

@@ -99,8 +99,10 @@ public class homeFragment extends Fragment {
         pieChart.setHoleRadius(25f);
         pieChart.setTransparentCircleRadius(30f);
         if(totalNonUsageTime>totalUsageTime) {
+            pieChart.setCenterTextSize(15f);
             pieChart.setCenterText("\\( ﾟヮﾟ)/");
         }else{
+            pieChart.setCenterTextSize(4f);
             pieChart.setCenterText("" +
                     "⡏⠉⠉⠉⠉⠉⠉⠋⠉⠉⠉⠉⠉⠉⠋⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠙⠉⠉⠉⠹\n" +
                     "⡇⢸⣿⡟⠛⢿⣷⠀⢸⣿⡟⠛⢿⣷⡄⢸⣿⡇⠀⢸⣿⡇⢸⣿⡇⠀⢸⣿⡇⠀\n" +
@@ -109,7 +111,6 @@ public class homeFragment extends Fragment {
                     "⡇⢸⣿⣧⣤⣼⡿⠃⢸⣿⡇⠀⢸⣿⡇⠸⣿⣧⣤⣼⡿⠁⢸⣿⡇⠀⢸⣿⡇⠀\n" +
                     "⣇⣀⣀⣀⣀⣀⣀⣄⣀⣀⣀⣀⣀⣀⣀⣠⣀⡈⠉⣁⣀⣄⣀⣀⣀⣠⣀⣀⣀⣰");
         }
-        pieChart.setCenterTextSize(4f);
 
         // Refresh the chart
         pieChart.invalidate();

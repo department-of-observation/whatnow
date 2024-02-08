@@ -47,12 +47,16 @@ public class ForumsPage extends AppCompatActivity {
     private ForumHelper helper;
     private int volleyResponseStatus;
 
+    private String Forums_Post_ID = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forums_page);
         list = findViewById(R.id.ForumList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getParent()); // dont know what this does
+        Forums_Post_ID = getIntent().getStringExtra("ID");
+
     }
 
     @Override
@@ -63,7 +67,32 @@ public class ForumsPage extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        //getAllVolley();
+        Cursor localDataCursor = helper.getAll();
+        do {
+            // Extract data from the Cursor and create a Forum object
+            String forumId = helper.getID(localDataCursor);
+            String forumTitle = helper.getforumtitle(localDataCursor);
+            String forumUser = helper.getforumuser(localDataCursor);
+            String forumContent = helper.getforumcontent(localDataCursor);
+            String forumDate = helper.getforumdate(localDataCursor);
+
+            Forum forum = new Forum();
+            forum.setId(forumId);
+            forum.setTitle(forumTitle);
+            forum.setUser(forumUser);
+            forum.setContent(forumContent);
+            forum.setDate(forumDate);
+
+            // Add the Forum object to the adapter
+            adapter.add(forum);
+        } while (localDataCursor.moveToNext());
+        localDataCursor.close();
+
+
+        if (adapter.getItemCount() == 0) {
+            // Data doesn't exist in the adapter (local database), fetch from server
+            getAllVolley();
+        }
         super.onResume();
     }
 
@@ -106,6 +135,16 @@ public class ForumsPage extends AppCompatActivity {
                                         r.setUser(data.getJSONObject(i).getString("forumuser")); //extract the restaurantaddress
                                         r.setContent(data.getJSONObject(i).getString("forumcontent")); //extract the restauranttel
                                         r.setDate(data.getJSONObject(i).getString("forumdate")); //extract the restauranttype
+
+                                        String forumtitle =data.getJSONObject(i).getString("forumtitle");
+                                        String forumuser =data.getJSONObject(i).getString("forumuser");
+                                        String forumcontent =data.getJSONObject(i).getString("forumcontent");
+                                        String forumdate =data.getJSONObject(i).getString("forumdate");
+                                        if (Forums_Post_ID == null){
+                                            helper.insert(forumtitle, forumuser, forumcontent, forumdate);
+                                        }else{
+                                            helper.update(Forums_Post_ID,forumtitle, forumuser, forumcontent, forumdate);
+                                        }
                                         adapter.add(r); // add the record to the adapter
                                     }
                                 }
