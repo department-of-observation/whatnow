@@ -69,31 +69,7 @@ public class ForumsPage extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Cursor localDataCursor = helper.getAll();
-        if (localDataCursor != null && localDataCursor.moveToFirst())
-        {
-            do {
-                // Extract data from the Cursor and create a Forum object
-                String forumId = helper.getID(localDataCursor);
-                String forumTitle = helper.getforumtitle(localDataCursor);
-                String forumUser = helper.getforumuser(localDataCursor);
-                String forumContent = helper.getforumcontent(localDataCursor);
-                String forumDate = helper.getforumdate(localDataCursor);
-
-                Forum forum = new Forum();
-                forum.setId(forumId);
-                forum.setTitle(forumTitle);
-                forum.setUser(forumUser);
-                forum.setContent(forumContent);
-                forum.setDate(forumDate);
-
-                // Add the Forum object to the adapter
-                adapter.add(forum);
-            } while (localDataCursor.moveToNext());
-            localDataCursor.close();
-        }
-
-
+        localretrieve();
         if (adapter.getItemCount() == 0) {
             // Data doesn't exist in the adapter (local database), fetch from server
             getAllVolley();
@@ -116,6 +92,34 @@ public class ForumsPage extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void localretrieve(){
+        Cursor localDataCursor = helper.getAll();
+        if (adapter.getItemCount() == 0) {
+            if (localDataCursor != null && localDataCursor.moveToFirst())
+            {
+                do {
+                    // Extract data from the Cursor and create a Forum object
+                    String forumId = helper.getID(localDataCursor);
+                    String forumTitle = helper.getforumtitle(localDataCursor);
+                    String forumUser = helper.getforumuser(localDataCursor);
+                    String forumContent = helper.getforumcontent(localDataCursor);
+                    String forumDate = helper.getforumdate(localDataCursor);
+
+                    Forum forum = new Forum();
+                    forum.setId(forumId);
+                    forum.setTitle(forumTitle);
+                    forum.setUser(forumUser);
+                    forum.setContent(forumContent);
+                    forum.setDate(forumDate);
+
+                    // Add the Forum object to the adapter
+                    adapter.add(forum);
+                } while (localDataCursor.moveToNext());
+                localDataCursor.close();
+            }
+        }
+
     }
 
 
