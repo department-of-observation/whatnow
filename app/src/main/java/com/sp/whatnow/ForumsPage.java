@@ -48,6 +48,7 @@ public class ForumsPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forums_page);
 
+
         helper = new ForumHelper(this);
 
         list = findViewById(R.id.ForumList);
@@ -236,6 +237,10 @@ public class ForumsPage extends AppCompatActivity {
                     Intent intent = new Intent(v.getContext(), ViewForum.class);
                     // Pass the unique ID to the ViewForum activity
                     intent.putExtra("forum_id", forum.getId());
+                    intent.putExtra("forumtitle", forum.getTitle());
+                    intent.putExtra("forumuser", forum.getUser());
+                    intent.putExtra("forumcontent", forum.getContent());
+                    intent.putExtra("forumdate", forum.getDate());
                     v.getContext().startActivity(intent);
                 }
             });
