@@ -1,43 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group
-        android:id="@+id/menu_top"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        <item
-            android:id="@+id/nav_dashboard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/dashboard_svgrepo_com"
-            android:title="Dashboard" />
-    </group>
-    <group
-        android:id="@+id/menu_middle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+    <item
+        android:id="@+id/main_item"
+        android:title="Dashboard">
+        <menu>
+            <item
+                android:id="@+id/nav_dashboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/dashboard_svgrepo_com"
+                android:title="Dashboard" />
+        </menu>
+    </item>
+    <item
+        android:id="@+id/labels_item"
+        android:title="Long Term plan">
+        <menu>
         <item
             android:id="@+id/nav_ltp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:icon="@drawable/arrow_up_graph_svgrepo_com"
             android:title="Long Term Plan " />
-    </group>
-    <group
-        android:id="@+id/menu_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+
         <item
-            android:id="@+id/nav_documents"
+            android:id="@+id/nav_exercise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/document_text_svgrepo_com"
-            android:title="Documents" />
-        <item
-            android:id="@+id/nav_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:icon="@drawable/setting_svgrepo_com"
-            android:title="Setttings" />
-    </group>
+            android:icon="@drawable/arrow_up_graph_svgrepo_com"
+            android:title="Exercise " />
+
+        </menu>
+    </item>
+    <item
+        android:id="@+id/settings_item"
+        android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_documents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/document_text_svgrepo_com"
+                android:title="Documents" />
+
+
+            <item
+                android:id="@+id/nav_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/setting_svgrepo_com"
+                android:title="Setttings" />
+
+
+        </menu>
+
+    </item>
+
 </menu>
