@@ -174,14 +174,29 @@ public class ForumsPage extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ForumHolder holder, int position) {
-            holder.populateFrom(model.get(position));
+        public void onBindViewHolder(ForumHolder holder, final int position) {
+            final Forum forum = model.get(position);
+            holder.populateFrom(forum);
+
+            // Set OnClickListener on the item
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // When item is clicked, create an Intent to start ViewForum activity
+                    Intent intent = new Intent(v.getContext(), ViewForum.class);
+                    // Pass the unique ID to the ViewForum activity
+                    intent.putExtra("forum_id", forum.getId());
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
 
         @Override
         public int getItemCount() {
             return model.size();
         }
+
+
     }
 
 }
