@@ -1,12 +1,18 @@
 package com.sp.whatnow;
 
+import android.Manifest;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
@@ -28,6 +34,7 @@ import java.util.List;
 public class homeFragment extends Fragment {
     private Long totalUsageTime;
     private Long totalNonUsageTime;
+    private static final int USAGE_STATS_PERMISSION_REQUEST_CODE = 1;
 
     public homeFragment() {
         // Required empty public constructor
@@ -36,13 +43,16 @@ public class homeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-        startActivity(intent);
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.PACKAGE_USAGE_STATS)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted, request it
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
+        }
 
 
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,7 +75,10 @@ public class homeFragment extends Fragment {
             totalNonUsageTime = 1440-totalUsageTime;
         }
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Dashboard");
+
+        return view;
     }
 
     @Override

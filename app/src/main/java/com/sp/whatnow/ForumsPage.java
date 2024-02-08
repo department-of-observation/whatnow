@@ -49,6 +49,7 @@ public class ForumsPage extends AppCompatActivity {
         setContentView(R.layout.activity_forums_page);
 
 
+
         helper = new ForumHelper(this);
 
         list = findViewById(R.id.ForumList);
@@ -60,6 +61,7 @@ public class ForumsPage extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Forum");
     }
 
     @Override

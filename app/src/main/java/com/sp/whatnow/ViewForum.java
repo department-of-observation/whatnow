@@ -112,6 +112,7 @@ public class ViewForum extends AppCompatActivity {
             getAllVolley();
         } else if (item.getItemId() == R.id.forum_add) {
             intent = new Intent(ViewForum.this,AddComment.class);
+            intent.putExtra("forum_id", dataforum_id);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
