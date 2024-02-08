@@ -1,23 +1,16 @@
 package com.sp.whatnow;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cursoradapter.widget.CursorAdapter;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +27,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +37,7 @@ public class ForumsPage extends AppCompatActivity {
     private ForumAdapter adapter = null;
     private RequestQueue queue;
     private ForumHelper helper;
+    private Toolbar toolbar;
     private int volleyResponseStatus;
 
     private String Forums_Post_ID = "";
@@ -56,7 +49,12 @@ public class ForumsPage extends AppCompatActivity {
         list = findViewById(R.id.ForumList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getParent()); // dont know what this does
         Forums_Post_ID = getIntent().getStringExtra("ID");
+        list.setLayoutManager(layoutManager);
+        adapter = new ForumAdapter();
+        list.setAdapter(adapter);
 
+        toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -103,8 +101,12 @@ public class ForumsPage extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.refresh) {
+        Intent intent;
+        if (item.getItemId() == R.id.forum_refresh) {
             getAllVolley(); //Update the RecyclerView
+        } else if (item.getItemId() == R.id.forum_add) {
+            intent = new Intent(ForumsPage.this,DetailsForum.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -125,10 +127,6 @@ public class ForumsPage extends AppCompatActivity {
                                     JSONArray data = response.getJSONArray("data");//Get all the records as JSON array
                                     for (int i = 0; i <= count; i++) { // Loop through all records
                                         Forum r = new Forum();
-                                        // Store the lastest id in lastID
-                                        if (ForumVolleyHelper.lastID < data.getJSONObject(i).getInt("id")) {
-                                            ForumVolleyHelper.lastID = data.getJSONObject(i).getInt("id");
-                                        }
                                         // For each json record
                                         r.setId(data.getJSONObject(i).getString("id")); //read the id
                                         r.setTitle(data.getJSONObject(i).getString("forumtitle")); //extract the restaurantname

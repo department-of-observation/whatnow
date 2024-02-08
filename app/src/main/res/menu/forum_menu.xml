@@ -2,8 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/refresh"
+        android:id="@+id/forum_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="Item" />
+        android:title="Refresh" />
+    <item
+        android:id="@+id/forum_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Add" />
 </menu>
