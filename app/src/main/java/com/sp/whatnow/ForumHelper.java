@@ -17,7 +17,7 @@ public class ForumHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
 
-        db.execSQL("CREATE TABLE  forums_table ( _id UUID PRIMARY KEY AUTOINCREMENT,"+
+        db.execSQL("CREATE TABLE  forums_table ( _id UUID  PRIMARY KEY,"+
                 " forumtitle TEXT, forumuser TEXT , forumcontent TEXT," +
                 " forumdate TEXT);");
     }
@@ -41,10 +41,10 @@ public class ForumHelper extends SQLiteOpenHelper {
                         "forumdate FROM  forums_table WHERE _ID = ?", args));
     }
 
-    public void insert(String forumtitle,String forumuser, String forumcontent,
+    public void insert(String uuid ,String forumtitle,String forumuser, String forumcontent,
                        String forumdate){
         ContentValues cv = new ContentValues();
-
+        cv.put("_id", uuid);
         cv.put("forumtitle",forumtitle);
         cv.put("forumuser",forumuser);
         cv.put("forumcontent",forumcontent);
