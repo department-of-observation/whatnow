@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +47,9 @@ public class ForumsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forums_page);
+
+        helper = new ForumHelper(this);
+
         list = findViewById(R.id.ForumList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getParent()); // dont know what this does
         Forums_Post_ID = getIntent().getStringExtra("ID");
@@ -66,25 +70,28 @@ public class ForumsPage extends AppCompatActivity {
     @Override
     protected void onResume() {
         Cursor localDataCursor = helper.getAll();
-        do {
-            // Extract data from the Cursor and create a Forum object
-            String forumId = helper.getID(localDataCursor);
-            String forumTitle = helper.getforumtitle(localDataCursor);
-            String forumUser = helper.getforumuser(localDataCursor);
-            String forumContent = helper.getforumcontent(localDataCursor);
-            String forumDate = helper.getforumdate(localDataCursor);
+        if (localDataCursor != null && localDataCursor.moveToFirst())
+        {
+            do {
+                // Extract data from the Cursor and create a Forum object
+                String forumId = helper.getID(localDataCursor);
+                String forumTitle = helper.getforumtitle(localDataCursor);
+                String forumUser = helper.getforumuser(localDataCursor);
+                String forumContent = helper.getforumcontent(localDataCursor);
+                String forumDate = helper.getforumdate(localDataCursor);
 
-            Forum forum = new Forum();
-            forum.setId(forumId);
-            forum.setTitle(forumTitle);
-            forum.setUser(forumUser);
-            forum.setContent(forumContent);
-            forum.setDate(forumDate);
+                Forum forum = new Forum();
+                forum.setId(forumId);
+                forum.setTitle(forumTitle);
+                forum.setUser(forumUser);
+                forum.setContent(forumContent);
+                forum.setDate(forumDate);
 
-            // Add the Forum object to the adapter
-            adapter.add(forum);
-        } while (localDataCursor.moveToNext());
-        localDataCursor.close();
+                // Add the Forum object to the adapter
+                adapter.add(forum);
+            } while (localDataCursor.moveToNext());
+            localDataCursor.close();
+        }
 
 
         if (adapter.getItemCount() == 0) {
@@ -134,12 +141,13 @@ public class ForumsPage extends AppCompatActivity {
                                         r.setContent(data.getJSONObject(i).getString("forumcontent")); //extract the restauranttel
                                         r.setDate(data.getJSONObject(i).getString("forumdate")); //extract the restauranttype
 
+                                        String forumid =data.getJSONObject(i).getString("id");
                                         String forumtitle =data.getJSONObject(i).getString("forumtitle");
                                         String forumuser =data.getJSONObject(i).getString("forumuser");
                                         String forumcontent =data.getJSONObject(i).getString("forumcontent");
                                         String forumdate =data.getJSONObject(i).getString("forumdate");
                                         if (Forums_Post_ID == null){
-                                            helper.insert(forumtitle, forumuser, forumcontent, forumdate);
+                                            helper.insert(forumid,forumtitle, forumuser, forumcontent, forumdate);
                                         }else{
                                             helper.update(Forums_Post_ID,forumtitle, forumuser, forumcontent, forumdate);
                                         }
