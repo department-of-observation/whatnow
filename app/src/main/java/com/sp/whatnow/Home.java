@@ -88,6 +88,7 @@ public class Home extends AppCompatActivity {
                     case R.id.nav_forum:
                         intent = new Intent(Home.this,ForumsPage.class);
                         startActivity(intent);
+                        drawerLayout.closeDrawer(GravityCompat.START);
                         return true;
                 }
                 return false;
