@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,6 +47,11 @@ public class ForumsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forums_page);
+
+
+
+        helper = new ForumHelper(this);
+
         list = findViewById(R.id.ForumList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getParent()); // dont know what this does
         Forums_Post_ID = getIntent().getStringExtra("ID");
@@ -55,6 +61,7 @@ public class ForumsPage extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Forum");
     }
 
     @Override
@@ -65,28 +72,7 @@ public class ForumsPage extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Cursor localDataCursor = helper.getAll();
-        do {
-            // Extract data from the Cursor and create a Forum object
-            String forumId = helper.getID(localDataCursor);
-            String forumTitle = helper.getforumtitle(localDataCursor);
-            String forumUser = helper.getforumuser(localDataCursor);
-            String forumContent = helper.getforumcontent(localDataCursor);
-            String forumDate = helper.getforumdate(localDataCursor);
-
-            Forum forum = new Forum();
-            forum.setId(forumId);
-            forum.setTitle(forumTitle);
-            forum.setUser(forumUser);
-            forum.setContent(forumContent);
-            forum.setDate(forumDate);
-
-            // Add the Forum object to the adapter
-            adapter.add(forum);
-        } while (localDataCursor.moveToNext());
-        localDataCursor.close();
-
-
+        localretrieve();
         if (adapter.getItemCount() == 0) {
             // Data doesn't exist in the adapter (local database), fetch from server
             getAllVolley();
@@ -109,6 +95,34 @@ public class ForumsPage extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void localretrieve(){
+        Cursor localDataCursor = helper.getAll();
+        if (adapter.getItemCount() == 0) {
+            if (localDataCursor != null && localDataCursor.moveToFirst())
+            {
+                do {
+                    // Extract data from the Cursor and create a Forum object
+                    String forumId = helper.getID(localDataCursor);
+                    String forumTitle = helper.getforumtitle(localDataCursor);
+                    String forumUser = helper.getforumuser(localDataCursor);
+                    String forumContent = helper.getforumcontent(localDataCursor);
+                    String forumDate = helper.getforumdate(localDataCursor);
+
+                    Forum forum = new Forum();
+                    forum.setId(forumId);
+                    forum.setTitle(forumTitle);
+                    forum.setUser(forumUser);
+                    forum.setContent(forumContent);
+                    forum.setDate(forumDate);
+
+                    // Add the Forum object to the adapter
+                    adapter.add(forum);
+                } while (localDataCursor.moveToNext());
+                localDataCursor.close();
+            }
+        }
+
     }
 
 
@@ -134,12 +148,13 @@ public class ForumsPage extends AppCompatActivity {
                                         r.setContent(data.getJSONObject(i).getString("forumcontent")); //extract the restauranttel
                                         r.setDate(data.getJSONObject(i).getString("forumdate")); //extract the restauranttype
 
+                                        String forumid =data.getJSONObject(i).getString("id");
                                         String forumtitle =data.getJSONObject(i).getString("forumtitle");
                                         String forumuser =data.getJSONObject(i).getString("forumuser");
                                         String forumcontent =data.getJSONObject(i).getString("forumcontent");
                                         String forumdate =data.getJSONObject(i).getString("forumdate");
                                         if (Forums_Post_ID == null){
-                                            helper.insert(forumtitle, forumuser, forumcontent, forumdate);
+                                            helper.insert(forumid,forumtitle, forumuser, forumcontent, forumdate);
                                         }else{
                                             helper.update(Forums_Post_ID,forumtitle, forumuser, forumcontent, forumdate);
                                         }
@@ -212,14 +227,33 @@ public class ForumsPage extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ForumHolder holder, int position) {
-            holder.populateFrom(model.get(position));
+        public void onBindViewHolder(ForumHolder holder, final int position) {
+            final Forum forum = model.get(position);
+            holder.populateFrom(forum);
+
+            // Set OnClickListener on the item
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // When item is clicked, create an Intent to start ViewForum activity
+                    Intent intent = new Intent(v.getContext(), ViewForum.class);
+                    // Pass the unique ID to the ViewForum activity
+                    intent.putExtra("forum_id", forum.getId());
+                    intent.putExtra("forumtitle", forum.getTitle());
+                    intent.putExtra("forumuser", forum.getUser());
+                    intent.putExtra("forumcontent", forum.getContent());
+                    intent.putExtra("forumdate", forum.getDate());
+                    v.getContext().startActivity(intent);
+                }
+            });
         }
 
         @Override
         public int getItemCount() {
             return model.size();
         }
+
+
     }
 
 }

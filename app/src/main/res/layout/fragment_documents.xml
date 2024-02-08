@@ -10,13 +10,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="TextView"
-            android:textAlignment="center" />
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -40,10 +33,12 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/table_school"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clickable="true"
                 android:minHeight="40dp"
-                android:clickable="true">
+                android:onClick="handleClick">
 
                 <TextView
                     android:id="@+id/textview3"
@@ -62,14 +57,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="260dp"
                     android:layout_marginTop="10dp"
+
                     android:background="@drawable/arrow_next_small_svgrepo_com" />
             </TableRow>
 
             <TableRow
+                android:id="@+id/table_courses"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:clickable="true"
                 android:minHeight="40dp"
-                android:clickable="true">
+                android:onClick="handleClick">
 
                 <TextView
                     android:id="@+id/textView4"
@@ -110,10 +108,12 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/table_national_award"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
-                android:minHeight="40dp">
+                android:minHeight="40dp"
+                android:onClick="handleClick">
 
                 <TextView
                     android:id="@+id/textView6"
@@ -136,10 +136,12 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/table_international_award"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
-                android:minHeight="40dp">
+                android:minHeight="40dp"
+                android:onClick="handleClick">
 
                 <TextView
                     android:id="@+id/textView7"
@@ -180,10 +182,12 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/table_others"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
-                android:minHeight="40dp">
+                android:minHeight="40dp"
+                android:onClick="handleClick">
 
                 <TextView
                     android:id="@+id/textView9"

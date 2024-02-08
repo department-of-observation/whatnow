@@ -2,6 +2,7 @@ package com.sp.whatnow;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 
 public class SettingsFragment extends Fragment {
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -27,6 +29,9 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d("Home", "Ok:");
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Settings");
+
+        return view;
     }
 }

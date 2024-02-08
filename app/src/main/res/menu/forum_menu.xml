@@ -5,10 +5,12 @@
         android:id="@+id/forum_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:icon="@drawable/rotate_right_solid"
         android:title="Refresh" />
     <item
         android:id="@+id/forum_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:icon="@drawable/plus_solid"
         android:title="Add" />
 </menu>

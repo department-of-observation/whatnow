@@ -59,7 +59,7 @@
             android:textColor="#1E1E1E" />
 
         <View
-            android:id="@+id/divider3"
+            android:id="@+id/divider4"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginStart="25dp"
