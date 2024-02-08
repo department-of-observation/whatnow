@@ -41,8 +41,8 @@
                 android:id="@+id/details_save"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:text="Button"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:text="Save" />
         </LinearLayout>
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
