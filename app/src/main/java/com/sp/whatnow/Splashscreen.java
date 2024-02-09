@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+
 public class Splashscreen extends AppCompatActivity {
 
     @Override
@@ -13,6 +16,7 @@ public class Splashscreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
         Handler handler = new Handler();
+        Glide.init(this, new GlideBuilder());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -22,7 +26,7 @@ public class Splashscreen extends AppCompatActivity {
                 Splashscreen.this.finish();
 
             }
-        }, 3000);
+        }, 1000);
     }
 
     @Override

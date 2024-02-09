@@ -1,5 +1,6 @@
 package com.sp.whatnow;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.io.File;
@@ -68,7 +70,8 @@ public class DocumentUploadFragment extends Fragment {
     private void checkPermission() {
         if (hasPermissions()) {
             // Permission already granted, proceed with image selection
-            selectImage();
+
+            showOptionSelectionDialog();
         } else {
             // Request permission
             ActivityCompat.requestPermissions(requireActivity(), REQUIRED_PERMISSIONS, REQUEST_PERMISSION_CODE);
@@ -146,6 +149,34 @@ public class DocumentUploadFragment extends Fragment {
         sourceChannel.transferTo(0, sourceChannel.size(), destChannel);
         sourceStream.close();
         destStream.close();
+        DocumentsFragment image = new DocumentsFragment();
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.homeFragmentContainer, image)
+                .addToBackStack(null) // Add to the back stack for back navigation
+                .commit();
+    }
+    private void showOptionSelectionDialog() {
+        // Create a list of options to display in the dialog
+        String[] options = {"school", "courses", "national", "international", "others"};
+
+        // Create an ArrayAdapter to display the options in the dialog
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, options);
+
+        // Create the AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Select an option")
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Update the selectedOption variable based on the selected option
+                        selectedOption = options[which];
+                        // Call the image selection method after the option is selected
+                        selectImage();
+                    }
+                })
+                .setCancelable(false) // To prevent dismissing the dialog by tapping outside
+                .show();
     }
 
 
