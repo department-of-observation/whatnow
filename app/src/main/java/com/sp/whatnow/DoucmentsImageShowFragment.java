@@ -1,9 +1,12 @@
 package com.sp.whatnow;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +55,7 @@ public class DoucmentsImageShowFragment extends Fragment {
             // Use the clickedId as needed
         }
         image_show_recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        File destinationDirectory = new File(Environment.getExternalStorageDirectory(), "download");
+        File destinationDirectory = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "whatnow/"+ clickedId);
         File[] files = destinationDirectory.listFiles();
         Log.d("baka","geh" );
 
@@ -72,14 +75,22 @@ public class DoucmentsImageShowFragment extends Fragment {
             Log.d("baka","more geh" );
         }
 
+        // Set up RecyclerView Adapter
         imageAdapter = new ImageAdapter(imageList);
         image_show_recyclerView.setAdapter(imageAdapter);
+
+        // Set the click listener on the adapter
 
         return view;
     }
     public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
+
         private List<ImageModel> imageList;
         private Context context;
+
+
+
+
 
         public ImageAdapter(List<ImageModel> imageList) {
             this.imageList = imageList;
@@ -103,6 +114,11 @@ public class DoucmentsImageShowFragment extends Fragment {
                     .placeholder(R.drawable.googlelogo) // Add your placeholder image
                     .error(R.drawable.googlelogo) // Add your error image
                     .into(holder.imageView);
+            holder.itemView.setOnClickListener(v -> {
+                // Directly handle the click event here
+                shareImage(imageModel.getImagePath());
+            });
+
         }
 
         @Override
@@ -119,5 +135,32 @@ public class DoucmentsImageShowFragment extends Fragment {
                 imageView = itemView.findViewById(R.id.header_image);
             }
         }
+    }
+    public void onItemClick(String imagePath) {
+        // Handle click event, e.g., share the image
+        shareImage(imagePath);
+    }
+
+    private void shareImage(String imagePath) {
+        // Create an Intent to share the image
+        File imageFile = new File(imagePath);
+
+        // Use FileProvider to get a content URI
+        Uri contentUri = FileProvider.getUriForFile(
+                requireContext(),
+                requireContext().getApplicationContext().getPackageName() + ".provider",
+                imageFile
+        );
+
+        // Create an Intent to share the image
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/*");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+
+        // Grant read permission to the receiving app
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        // Start the chooser
+        startActivity(Intent.createChooser(shareIntent, "Share Image"));
     }
 }
