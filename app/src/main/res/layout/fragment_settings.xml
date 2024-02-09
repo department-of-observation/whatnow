@@ -249,13 +249,13 @@
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
-                <TextView
-                    android:id="@+id/settingarrow6"
+                <Switch
+                    android:id="@+id/switch1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="260dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/arrow_next_small_svgrepo_com" />
+
+                    android:layout_gravity="center_vertical"/>
+
             </TableRow>
         </TableLayout>
     </LinearLayout>
