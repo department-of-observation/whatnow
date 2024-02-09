@@ -20,7 +20,8 @@
             android:id="@+id/button_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alarm" />
+            android:text="Alarm"
+            android:layout_gravity="center"/>
     </LinearLayout>
 
 </FrameLayout>

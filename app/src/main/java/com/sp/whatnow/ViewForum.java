@@ -90,6 +90,7 @@ public class ViewForum extends AppCompatActivity {
         forumdate.setText(dataforumdate);
         forumuser.setText(dataforumuser);
         forumtext.setText(dataforumcontent);
+        toolbar.setTitle(dataforumtitle);
         if (user != null) {
             currentgoogleid = user.getUid();
             Log.d("geh", "getting google id lol");
