@@ -19,7 +19,7 @@ public class ForumHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE  forums_table ( _id UUID  PRIMARY KEY,"+
                 " forumtitle TEXT, forumuser TEXT , forumcontent TEXT," +
-                " forumdate TEXT);");
+                " googleid Text, forumdate TEXT);");
     }
 
     @Override
@@ -30,7 +30,7 @@ public class ForumHelper extends SQLiteOpenHelper {
     public Cursor getAll(){
         return (getReadableDatabase().rawQuery(
                 " SELECT _ID, forumtitle, forumuser, forumcontent," +
-                        "forumdate FROM  forums_table ORDER BY _ID",null));
+                        "googleid, forumdate FROM forums_table ORDER BY _ID",null));
     }
 
     public Cursor getById(String id) {
@@ -38,28 +38,30 @@ public class ForumHelper extends SQLiteOpenHelper {
 
         return (getReadableDatabase().rawQuery(
                 " SELECT _ID, forumtitle, forumuser, forumcontent," +
-                        "forumdate FROM  forums_table WHERE _ID = ?", args));
+                        "googleid, forumdate FROM  forums_table WHERE _ID = ?", args));
     }
 
     public void insert(String uuid ,String forumtitle,String forumuser, String forumcontent,
-                       String forumdate){
+                       String googleid, String forumdate){
         ContentValues cv = new ContentValues();
         cv.put("_id", uuid);
         cv.put("forumtitle",forumtitle);
         cv.put("forumuser",forumuser);
         cv.put("forumcontent",forumcontent);
+        cv.put("googleid",googleid);
         cv.put("forumdate",forumdate);
 
         getWritableDatabase().insert(" forums_table","forumtitle",cv);
     }
 
     public void update(String id, String forumtitle,String forumuser, String forumcontent,
-                       String forumdate){
+                       String googleid, String forumdate){
         ContentValues cv = new ContentValues();
         String[] args = {id};
         cv.put("forumtitle",forumtitle);
         cv.put("forumuser",forumuser);
         cv.put("forumcontent",forumcontent);
+        cv.put("googleid",googleid);
         cv.put("forumdate",forumdate);
 
         getWritableDatabase().update(" forums_table",cv," _ID = ?",args);
@@ -76,7 +78,9 @@ public class ForumHelper extends SQLiteOpenHelper {
     public String getforumcontent(Cursor c){
         return(c.getString(3));
     }
+    public String getgoogleid(Cursor c){return (c.getString(4));}
     public String getforumdate(Cursor c){
-        return(c.getString(4));
+        return(c.getString(5));
     }
+
 }

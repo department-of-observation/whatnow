@@ -2,21 +2,6 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="DetailsForum">
-        <State />
-      </entry>
-      <entry key="ForumsPage">
-        <State />
-      </entry>
-      <entry key="Login">
-        <State />
-      </entry>
-      <entry key="Signup">
-        <State />
-      </entry>
-      <entry key="StartupActivity">
-        <State />
-      </entry>
       <entry key="app">
         <State>
           <runningDeviceTargetSelectedWithDropDown>
@@ -25,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="SERIAL_NUMBER" />
-                  <value value="RFCR90ARL3Z" />
+                  <value value="adb-RFCR90ARL3Z-BYp0tc._adb-tls-connect._tcp" />
                 </Key>
               </deviceKey>
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-08T09:32:58.402682200Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-02-09T03:55:56.239149200Z" />
         </State>
       </entry>
     </value>

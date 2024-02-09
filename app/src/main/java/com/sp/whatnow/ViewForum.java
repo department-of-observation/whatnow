@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 
 import com.android.volley.NetworkResponse;
@@ -24,6 +26,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,23 +43,28 @@ public class ViewForum extends AppCompatActivity {
     private String dataforumuser ="";
     private String dataforumcontent ="";
     private String dataforumdate ="";
+    private String datagoogleid ="";
 
     private TextView forumtitle;
     private TextView forumdate;
     private TextView forumuser;
     private TextView forumtext;
+    private Button deletebutton;
     private Toolbar toolbar;
     private ListView list;
     private List<Comment> model = new ArrayList<>();
     private CommentAdapter adapter = null;
     private RequestQueue queue;
     private int volleyResponseStatus;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_forum);
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        String currentgoogleid = "";
         TextView forumtitle = findViewById(R.id.forum_title);
         TextView forumdate = findViewById(R.id.forum_date);
         TextView forumuser = findViewById(R.id.forum_user);
@@ -64,6 +73,7 @@ public class ViewForum extends AppCompatActivity {
         adapter = new CommentAdapter();
         list.setAdapter(adapter);
         toolbar = findViewById(R.id.toolbar3);
+        deletebutton = findViewById(R.id.delete_forum);
         setSupportActionBar(toolbar);
 
         Intent intent = getIntent();
@@ -73,12 +83,37 @@ public class ViewForum extends AppCompatActivity {
             dataforumuser = intent.getStringExtra("forumuser");
             dataforumcontent = intent.getStringExtra("forumcontent");
             dataforumdate = intent.getStringExtra("forumdate");
+            datagoogleid = intent.getStringExtra("googleid");
             // Now, 'receivedData' contains the string sent from the previous activity
         }
         forumtitle.setText(dataforumtitle);
         forumdate.setText(dataforumdate);
         forumuser.setText(dataforumuser);
         forumtext.setText(dataforumcontent);
+        if (user != null) {
+            currentgoogleid = user.getUid();
+            Log.d("geh", "getting google id lol");
+        }
+        if (currentgoogleid.equals(datagoogleid)) {
+            deletebutton.setVisibility(View.VISIBLE);
+            Log.d("ceh", "WOOSH VISIBLEEE");
+        } else {
+            deletebutton.setVisibility(View.GONE);
+            Log.d("beh", "AWWWW ITS GONEEEEE");
+            Log.d("beg",currentgoogleid);
+            Log.d("beg",datagoogleid);
+        }
+        deletebutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (dataforum_id != null) {
+                    // Delele current record
+                    deleteVolley(dataforum_id);
+                }
+                finish();
+            }
+        });
+
     }
     @Override
     protected void onResume() {
@@ -195,6 +230,34 @@ public class ViewForum extends AppCompatActivity {
             protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
                 volleyResponseStatus = response.statusCode;
                 return super.parseNetworkResponse(response);
+            }
+        };
+        // add JsonObjectRequest to the RequestQueue
+        queue.add(jsonObjectRequest);
+    }
+
+    private void deleteVolley(String id) {
+        // Rest api link
+        String url = ForumVolleyHelper.url + id; // Delete by id
+        RequestQueue queue = Volley.newRequestQueue(this);
+        // Use DELETE REST api call
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(getApplicationContext(), "Response status : " + volleyResponseStatus, Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.e("OnErrorResponse", error.toString());
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                return ForumVolleyHelper.getHeader();
             }
         };
         // add JsonObjectRequest to the RequestQueue
