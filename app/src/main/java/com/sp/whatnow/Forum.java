@@ -6,6 +6,7 @@ public class Forum {
     private String forumuser = "";
     private String forumcontent = "";
     private String forumdate = "";
+    private String googleid = "";
 
     public String getId() {
         return id;
@@ -45,6 +46,14 @@ public class Forum {
 
     public void setDate(String forumdate) {
         this.forumdate = forumdate;
+    }
+
+    public String getGoogleId() {
+        return googleid;
+    }
+
+    public void setGoogleId(String googleId) {
+        this.googleid = googleId;
     }
 
     @Override

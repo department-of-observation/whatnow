@@ -1,37 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ForumsPage">
 
-    <FrameLayout
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:title="Forums"
+        app:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
+    <!-- Vertical LinearLayout for Content -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/toolbar2"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- TextView Header -->
+        <TextView
+            android:id="@+id/textView10"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Latest Forums"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textColor="@android:color/black" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar2"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:text="TextView"
-                android:textAlignment="center" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/ForumList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </FrameLayout>
+        <!-- RecyclerView for Forum List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ForumList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

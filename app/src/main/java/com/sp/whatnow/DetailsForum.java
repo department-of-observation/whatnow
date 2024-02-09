@@ -66,14 +66,16 @@ public class DetailsForum extends AppCompatActivity {
             String titleStr =  detailsTitle.getText().toString();
             String contentStr = detailsContent.getText().toString();
             String currentDate = getCurrentDate();
-            String nameStr = null;
+            String nameStr = "";
+            String googleid = "";
             if (user != null) {
                 nameStr = user.getDisplayName();
+                googleid =  user.getUid();
             } else {
                 Toast.makeText(DetailsForum.this, "Please log in to Post.", Toast.LENGTH_SHORT).show();
                 finish();
             }
-            insertVolley(newuuid, titleStr, nameStr, contentStr, currentDate);
+            insertVolley(newuuid, titleStr, nameStr, contentStr, currentDate, googleid);
             finish();
         }
         private String getCurrentDate() {
@@ -83,7 +85,7 @@ public class DetailsForum extends AppCompatActivity {
     };
 
     // Insert a new record to Astra DB
-    private void insertVolley(String id, String titleStr, String nameStr, String contentStr, String currentDate) {
+    private void insertVolley(String id, String titleStr, String nameStr, String contentStr, String currentDate, String googleid) {
         // Create a JSON object from the parameters
         Map<String, String> params = new HashMap<String, String>();
         params.put("id", id);
@@ -91,6 +93,7 @@ public class DetailsForum extends AppCompatActivity {
         params.put("forumuser", nameStr);
         params.put("forumcontent", contentStr);
         params.put("forumdate", currentDate);
+        params.put("googleid",googleid);
         JSONObject postdata = new JSONObject(params); // Data as JSON object to be insert into the database
         RequestQueue queue = Volley.newRequestQueue(this);
         // Rest api link

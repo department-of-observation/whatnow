@@ -73,10 +73,7 @@ public class ForumsPage extends AppCompatActivity {
     @Override
     protected void onResume() {
         localretrieve();
-        if (adapter.getItemCount() == 0) {
-            // Data doesn't exist in the adapter (local database), fetch from server
-            getAllVolley();
-        }
+        getAllVolley();
         super.onResume();
     }
 
@@ -108,6 +105,7 @@ public class ForumsPage extends AppCompatActivity {
                     String forumUser = helper.getforumuser(localDataCursor);
                     String forumContent = helper.getforumcontent(localDataCursor);
                     String forumDate = helper.getforumdate(localDataCursor);
+                    String googleid = helper.getgoogleid(localDataCursor);
 
                     Forum forum = new Forum();
                     forum.setId(forumId);
@@ -115,6 +113,7 @@ public class ForumsPage extends AppCompatActivity {
                     forum.setUser(forumUser);
                     forum.setContent(forumContent);
                     forum.setDate(forumDate);
+                    forum.setGoogleId(googleid);
 
                     // Add the Forum object to the adapter
                     adapter.add(forum);
@@ -142,21 +141,23 @@ public class ForumsPage extends AppCompatActivity {
                                     for (int i = 0; i <= count; i++) { // Loop through all records
                                         Forum r = new Forum();
                                         // For each json record
-                                        r.setId(data.getJSONObject(i).getString("id")); //read the id
-                                        r.setTitle(data.getJSONObject(i).getString("forumtitle")); //extract the restaurantname
-                                        r.setUser(data.getJSONObject(i).getString("forumuser")); //extract the restaurantaddress
-                                        r.setContent(data.getJSONObject(i).getString("forumcontent")); //extract the restauranttel
-                                        r.setDate(data.getJSONObject(i).getString("forumdate")); //extract the restauranttype
+                                        r.setId(data.getJSONObject(i).getString("id"));
+                                        r.setTitle(data.getJSONObject(i).getString("forumtitle"));
+                                        r.setUser(data.getJSONObject(i).getString("forumuser"));
+                                        r.setContent(data.getJSONObject(i).getString("forumcontent"));
+                                        r.setDate(data.getJSONObject(i).getString("forumdate"));
+                                        r.setGoogleId(data.getJSONObject(i).getString("googleid"));
 
                                         String forumid =data.getJSONObject(i).getString("id");
                                         String forumtitle =data.getJSONObject(i).getString("forumtitle");
                                         String forumuser =data.getJSONObject(i).getString("forumuser");
                                         String forumcontent =data.getJSONObject(i).getString("forumcontent");
                                         String forumdate =data.getJSONObject(i).getString("forumdate");
+                                        String googleid =data.getJSONObject(i).getString("googleid");
                                         if (Forums_Post_ID == null){
-                                            helper.insert(forumid,forumtitle, forumuser, forumcontent, forumdate);
+                                            helper.insert(forumid,forumtitle, forumuser, forumcontent, forumdate, googleid);
                                         }else{
-                                            helper.update(Forums_Post_ID,forumtitle, forumuser, forumcontent, forumdate);
+                                            helper.update(Forums_Post_ID,forumtitle, forumuser, forumcontent, forumdate, googleid);
                                         }
                                         adapter.add(r); // add the record to the adapter
                                     }
@@ -243,6 +244,11 @@ public class ForumsPage extends AppCompatActivity {
                     intent.putExtra("forumuser", forum.getUser());
                     intent.putExtra("forumcontent", forum.getContent());
                     intent.putExtra("forumdate", forum.getDate());
+                    intent.putExtra("googleid", forum.getGoogleId());
+                    Log.d("CHECK LULLLLL", forum.getGoogleId());
+                    Log.d("CHECK LULLLLL", forum.getTitle());
+                    Log.d("CHECK LULLLLL", forum.getContent());
+
                     v.getContext().startActivity(intent);
                 }
             });
